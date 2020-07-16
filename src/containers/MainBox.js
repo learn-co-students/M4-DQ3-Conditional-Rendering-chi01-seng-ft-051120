@@ -3,7 +3,32 @@ import MenuBar from '../components/MenuBar.js'
 import { Profile, Photos, Cocktails, Pokemon} from '../components/Pages.js'
 
 class MainBox extends React.Component {
+  state = {
+    clickedItem: ""
+  }
 
+  handleClick = event => {
+    console.log(event.target)
+    let choice = this.findComponent(event.target.id)
+    console.log(choice)
+    this.setState({
+      clickedItem: choice 
+    })
+  }
+
+  findComponent(id) {
+    if (id === "profile") {
+      return <Profile/>
+    } else if (id === "photo") {
+      return <Photos/>
+    } else if (id === "cocktail") {
+      return <Cocktails/>
+    } else if (id === "pokemon") {
+      return <Pokemon/>
+    } else {
+      return ""
+    }
+  }
 
   render() {
 
@@ -13,11 +38,11 @@ class MainBox extends React.Component {
 
     */
 
-    const detailsToDisplay = <div>Hi, I'm a div!</div>
-
+    const detailsToDisplay = (this.state.clickedItem === "" ? <div>Nothing to see yet!</div> : this.state.clickedItem)
+    console.log(detailsToDisplay)
     return (
       <div>
-        <MenuBar />
+        <MenuBar handleClick={this.handleClick}/>
         {detailsToDisplay}
       </div>
     )
